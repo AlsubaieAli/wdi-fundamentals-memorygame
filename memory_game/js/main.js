@@ -32,14 +32,26 @@ function checkForMatch() {
 	}
 }
 
-function flipCard(cardID) {
-	var card = cards[cardID];
-	cardsInPlay.push(card.rank);
-    console.log("User flipped " + card.rank);
-    console.log(card.cardImage);
-    console.log(card.suit)
+function flipCard() {
+    var cardId = this.getAttribute('data-id');
+    selectedCard = cards[cardId];
+	cardsInPlay.push(selectedCard.rank);
+    console.log("User flipped " + selectedCard.rank);
+    console.log(selectedCard.cardImage);
+    console.log(selectedCard.suit)
+    this.setAttribute('src', selectedCard.cardImage);
 	checkForMatch();
 }
 
-flipCard(0);
-flipCard(2);
+function createBoard(){
+    for (let i = 0; i < cards.length; i++) {
+        const aCard = cards[i];
+        var element = document.createElement('img');
+        element.setAttribute('src', 'images/back.png');
+        element.setAttribute('data-id', i);
+        element.addEventListener('click', flipCard);
+        document.querySelector('#game-board').appendChild(element);
+    }
+}
+
+createBoard();
